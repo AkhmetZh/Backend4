@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Analytical Platform</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@1"></script>
+
+
+</head>
+<body>
+<div class="container">
+    <h1>Analytical Platform (MongoDB Time-Series)</h1>
+
+    <div class="card">
+        <h2>Filters</h2>
+        <form id="controls" class="row">
+            <label>
+                Field
+                <select id="field">
+                    <option value="field1">field1</option>
+                    <option value="field2">field2</option>
+                    <option value="field3">field3</option>
+                </select>
+            </label>
+
+            <label>
+                Start date (YYYY-MM-DD)
+                <input id="start_date" type="date" required />
+            </label>
+
+            <label>
+                End date (YYYY-MM-DD)
+                <input id="end_date" type="date" required />
+            </label>
+
+            <label>
+                Chart type
+                <select id="chart_type">
+                    <option value="line">Line</option>
+                    <option value="bar">Bar</option>
+                </select>
+            </label>
+
+            <button type="submit">Load chart</button>
+            <button type="button" id="resetZoom">Reset zoom</button>
+        </form>
+
+        <div class="status" id="status"></div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <h2>Chart</h2>
+            <canvas id="chart"></canvas>
+        </div>
+
+        <div class="card">
+            <h2>Metrics</h2>
+
+            <form id="metricsForm" class="row">
+                <button type="submit">Get metrics</button>
+            </form>
+
+            <div class="status" id="metricsStatus"></div>
+
+            <div class="metrics">
+                <div class="metric"><div class="k">Average</div><div class="v" id="m_avg">-</div></div>
+                <div class="metric"><div class="k">Minimum</div><div class="v" id="m_min">-</div></div>
+                <div class="metric"><div class="k">Maximum</div><div class="v" id="m_max">-</div></div>
+                <div class="metric"><div class="k">Std Dev</div><div class="v" id="m_std">-</div></div>
+                <div class="metric"><div class="k">Count</div><div class="v" id="m_count">-</div></div>
+            </div>
+
+            <h3>API examples</h3>
+            <pre id="api_examples"></pre>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:12px;">
+        <h2>Add Measurement</h2>
+
+        <form id="manualForm" class="row">
+            <label>
+                Timestamp (ISO UTC, optional)
+                <input id="in_timestamp" type="text" placeholder="2026-01-26T10:00:00Z" />
+                <small class="hint">If empty, server uses current time. Recommended format: ISO with Z.</small>
+            </label>
+
+            <label>
+                field1
+                <input id="in_field1" type="number" step="0.01" required />
+            </label>
+
+            <label>
+                field2
+                <input id="in_field2" type="number" step="0.01" required />
+            </label>
+
+            <label>
+                field3
+                <input id="in_field3" type="number" step="0.01" required />
+            </label>
+
+            <button type="submit">Add</button>
+        </form>
+
+        <div class="status" id="manualStatus"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
